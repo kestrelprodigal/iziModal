@@ -1,4 +1,6 @@
 # [iziModal](http://izimodal.dolce.ninja)
+[![CDNJS](https://img.shields.io/cdnjs/v/izimodal.svg)](https://cdnjs.com/libraries/izimodal)
+
 Elegant, responsive, flexible and lightweight modal plugin with jQuery.
 
 [**izimodal**.marcelodolce.com](http://izimodal.marcelodolce.com)
@@ -15,8 +17,38 @@ Fast | Responsive | Animated | Lightweight | Customizable | History | Group Mode
 ![alt text][logo] | ![alt text][logo] | ![alt text][logo] | ![alt text][logo] | ![alt text][logo] | ![alt text][logo] | ![alt text][logo] | ![alt text][logo]
 
 
+- All modern browsers are supported (Tested in Chrome, Firefox, Opera, Safari, IE9+ and Edge).
+- Bugs? create an issue [here](https://github.com/dolce/iziModal/issues).
+
 ___
 ### Version Log
+
+- **v1.4.2**
+  - ![alt text][new] All the options can now be used through the data-iziModal-optionName attribute - *Implemented.*
+  - ![alt text][bug] Inaccurate modal height calculation - *Fixed.*
+  - ![alt text][bug] The Light theme was not applied correctly - *Fixed.*
+
+- **v1.4.0/1.4.1**
+  - ![alt text][new] RTL support - *Implemented.*
+  - ![alt text][new] WAI-ARIA support - *Implemented.*
+  - ![alt text][bug] An error occurred if there was a hash did not belong to the modal - *Fixed.*
+  - ![alt text][bug] It breaks the layout if "iziModal" class is missing - *Fixed.*
+  - ![alt text][bug] The vertical positioning of the modal, sometimes was not applied correctly - *Fixed.*
+  - ![alt text][bug] Transitions of modals positioning do not behave correctly - *Fixed.*
+  - ![alt text][bug] The modals group navigation did not work correctly If any modal was destroyed - *Fixed.*
+
+- **v1.3.3**
+  - ![alt text][new] Text icons support (option, data-attr and set method)  - *Implemented.*
+  - ![alt text][bug] History was always active on mobile - *Fixed.*
+  - ![alt text][bug] It was not possible to instantiate multiple modals at once - *Fixed.*
+
+- **v1.3.2**
+  - ![alt text][new] setGroup to set new group name - *Implemented.*
+  - ![alt text][bug] group option work in some cases - *Fixed.*
+
+- **v1.3.1**
+  - ![alt text][bug] iframe URL (by event like click) not work with append childs - *Fixed.*
+  - ![alt text][bug] Widths with percentage does not work - *Fixed.*
 
 - **v1.3.0**
   - ![alt text][new] History support - *Implemented.*
@@ -51,6 +83,11 @@ ___
   - ![alt text][bug] overlayClose only works the first time - *Fixed.*
 
 ___
+### Use
+
+#### [CDNJS](https://cdnjs.com/libraries/izimodal)
+https://cdnjs.com/libraries/izimodal
+
 ### Install
 
 #### [npm](https://www.npmjs.com/package/izimodal)
@@ -103,6 +140,8 @@ ___
 <button data-izimodal-prev>Previous Modal</button>
 ```
 
+#### Data-attr to Modal
+
 - Add **data-izimodal-group** to div of the modal for build a group with everyone involved.
 ```html
 <div id="modal" class="iziModal" data-izimodal-group="alerts"></div>
@@ -113,31 +152,9 @@ ___
 <div id="modal" class="iziModal" data-izimodal-loop></div>
 ```
 
-- Set a default **Title**.
-```html
-<div id="modal" class="iziModal" data-izimodal-title="Welcome to the iziModal"></div>
-```
+- Update v1.4.2+
 
-- Set a default **Subtitle**.
-```html
-<div id="modal" class="iziModal" data-izimodal-subtitle="Hello world"></div>
-```
-
-- Set a default **Icon** class.
-```html
-<div id="modal" class="iziModal" data-izimodal-icon="icon-star"></div>
-```
-
-- Set a default **transitionI*n* and **transitionOut**.
-```html
-<div id="modal" class="iziModal" data-izimodal-transitionin="comingIn" data-izimodal-transitionout="comingOut"></div>
-```
-
-- **Attach** the modal at the *top* or *bottom* of the screen.
-```html
-<div id="modal" class="iziModal" data-izimodal-attached="bottom">Attach Top/Bottom</div>
-```
-
+#### ![alt text][new] Now all options can be set via data-attrs.
 
 
 
@@ -153,8 +170,10 @@ $("#modal").iziModal({
     headerColor: '#88A0B9',
     theme: '',  // light
     attached: '', // bottom, top
-    icon: '',
+    icon: null,
+    iconText: null,
     iconColor: '',
+    rtl: false,
     width: 600,
     padding: 0,
     radius: 3,
@@ -197,32 +216,47 @@ $("#modal").iziModal({
 
 Argument | Default Value | Description
 :---: | :---: | ---
-**title** | *""* | Title that appears in the modal header.
-**subtitle** | *""* | Caption that appears in the header below the title.
-**theme** | *""* | Caption that appears in the header below the title.
-**headerColor** | *#6d7d8d* | Color to fill the header background, will also be applied to the bottom edge of the modal.
-**iconClass** | *null* | Icon class (font-icon of your choice) that will be displayed in modal header.
-**headerColor** | *#6d7d8d*	 | Color to fill the header background, will also be applied to the bottom edge of the modal.
-**overlayColor** | *rgba(0,0,0,0.4)* | Color overlay.
+**title** | *''* | Title that appears in the modal header.
+**subtitle** | *''* | Caption that appears in the header below the title.
+**headerColor** | *'#6d7d8d'* | Color to fill the header background, will also be applied to the bottom edge of the modal.
+**theme** | *''* | Theme of the modal, can be empty or **"light"**.
+**attached** | *''* | Attach the modal at the **top** or **bottom** of the screen.
+**icon** | *null* | Icon class (font-icon of your choice) that will be displayed in modal header.
+**iconText** | *null* | Icon text (font-icon using text) that will be displayed in modal header.
+**iconColor** | *''* | Color of the header icon.
+**rtl** | *false* | Right To Left option.
 **width** | *600* | Fixed width of the modal. You can use %, px, em or cm. If not using an unit of measure. It will be taken over the px unit.
 **padding** | *0* | Margin that will be applied to the inside of the modal.
+**radius** | *3* | Border-radius that will be applied in modal.
+**zindex** | *999* | The z-index CSS attribute of the modal.
 **iframe** | *false* | Set true to apply an iframe inside the modal.
 **iframeHeight** | *null* | Fixed height of the iframe.
 **iframeURL** | *null* | Address that will open in the iframe inside the modal, if not set, the user can alternatively use the href link responsible for opening it.
-**overlayClose** | *true* | If set true, you can close the modal just by clicking on the outer layer of dark modal.
-**closeOnEscape** | *true* | If set true, you can close the modal only pressing the escape key.
-**bodyOverflow** | *false* | Forcing overflow hidden in the document when opening the modal, closing the modal, overflow will be restored.
 **focusInput** | *true* | If set true, whenever you open a modal, the first visible field is active.
-**autoOpen** | *false* | 	If set true, the modal opens automatically without any user action.
+**group** | '' | Create a group with everyone who has the same name, so can navigate between them.
+**loop** | *false* | It allows loop with modals of the same group.
+**navigateCaption** | *true* | Show arrows to inform possible navigation.
+**navigateArrows** | *true* | Change the layout which displays the arrows to navigate between the modals. Can be: 'closeToModal' or 'closeScreenEdge'.
+**history** | *true* | Enable browsing history.
+**restoreDefaultContent** | *false* | Makes return the default modal content to be open again.
+**autoOpen** | *0 or false* | 	If set true, the modal opens automatically without any user action.
+**bodyOverflow** | *false* | Forcing overflow hidden in the document when opening the modal, closing the modal, overflow will be restored.
 **fullscreen** | *false* | 	Allow button in header modal to expand.
 **openFullscreen** | *false* | 	Force to open modal in fullscreen.
+**closeOnEscape** | *true* | If set true, you can close the modal only pressing the escape key.
+**overlay** | *true* | 	Enable or disable background overlay.
+**overlayClose** | *true* | If set true, you can close the modal just by clicking on the outer layer of dark modal.
+**overlayColor** | *'rgba(0,0,0,0.4)'* | Color overlay.
 **timeout** | *0 or false* | 	Amount in milliseconds to close the modal or false to disable.
 **timeoutProgressbar** | *false* | 	Enable progress bar of timeout.
-**timeoutProgressbarColor** | *rgba(255,255,255,0.5)* | 	Progress bar color.
-**transitionInModal** | *transitionIn* | Modal opening default transition.
-**transitionOutModal** | *transitionOut* | Modal closing default transition.
-**transitionInOverlay** | *fadeIn* | Default transition of overlay opening.
-**transitionOutOverlay** | *fadeOut* | Default transition of overlay closure.
+**timeoutProgressbarColor** | *'rgba(255,255,255,0.5)'* | 	Progress bar color.
+**pauseOnHover** | false | It allows the timeout is paused when the cursor is on the modal.
+**transitionIn** | *'comingI'n* | Modal opening default transition.
+**transitionOut** | *'comingOut'* | Modal closing default transition.
+**transitionInOverlay** | *'fadeIn'* | Default transition of overlay opening.
+**transitionOutOverlay** | *'fadeOut'* | Default transition of overlay closure.
+**onFullscreen** | *function() {}*	 | Callback function that will run when the modal enable or disable full screen.
+**onResize** | *function() {}*	 | Callback function that will be executed when a resize occurs.
 **onOpening** | *function() {}*	 | Callback function that will run when opening the modal.
 **onOpened** | *function() {}*	 | Callback function that will run when the modal is open.
 **onClosing** | *function() {}*	 | Callback function that will run when closing the modal.
@@ -286,6 +320,11 @@ $('#modal').iziModal('getState');
 $('#modal').iziModal('getGroup');
 ```
 
+- **setGroup** - Set a new group name.
+```javascript
+$('#modal').iziModal('setGroup', 'alerts');
+```
+
 - **Next** - Skip to next modal to the same group.
 ```javascript
 $('#modal').iziModal('next');
@@ -340,9 +379,14 @@ $('#modal').iziModal('setTitle', 'Title');
 $('#modal').iziModal('setSubtitle', 'Subtitle');
 ```
 
-- **setIconClass** - Change the icon of the modal.
+- **setIcon** - Change the class of icon.
 ```javascript
-$('#modal').iziModal('setIconClass', 'iconClass');
+$('#modal').iziModal('setIcon', 'icon-home');
+```
+
+- **setIconText** - Change the text of font icon.
+```javascript
+$('#modal').iziModal('setIconText', 'icon');
 ```
 
 - **setZindex** - Change the z-index CSS attribute of the modal.
